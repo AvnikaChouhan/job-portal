@@ -14,4 +14,11 @@ public class JobService {
     public Job createJob(Job job) {
         return jobRepository.save(job);
     }
+    public boolean existsById(Long id) {
+        return jobRepository.existsById(id);
+    }
+
+    public void deleteJob(Long id) {
+        jobRepository.deleteById(id);
+    }
 }

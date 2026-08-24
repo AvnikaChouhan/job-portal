@@ -1,9 +1,7 @@
 package com.jobportal.controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import com.jobportal.service.JobService;
-import org.springframework.web.bind.annotation.PostMapping;
 import com.jobportal.entity.Job;
 @RestController
 public class JobController {
@@ -18,5 +16,14 @@ public class JobController {
     @PostMapping("/jobs")
     public Job createJob(@RequestBody Job job) {
         return jobService.createJob(job);
+    }
+    @DeleteMapping("/jobs/{id}")
+    public ResponseEntity<String> deleteJob(@PathVariable Long id) {
+        if (!jobService.existsById(id)) {
+            return ResponseEntity.notFound().build();
+        }
+
+        jobService.deleteJob(id);
+        return ResponseEntity.ok("Job deleted successfully");
     }
 }
